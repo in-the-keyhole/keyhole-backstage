@@ -61,6 +61,8 @@ import {
   isArgocdAvailable
 } from '@roadiehq/backstage-plugin-argo-cd';
 
+import { EntityGithubPullRequestsContent, EntityGithubPullRequestsOverviewCard } from '@roadiehq/backstage-plugin-github-pull-requests';
+
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -118,22 +120,30 @@ const entityWarningContent = (
 
 const overviewContent = (
   <Grid container spacing={3} alignItems="stretch">
+
     {entityWarningContent}
+
     <Grid item md={6}>
       <EntityAboutCard variant="gridItem" />
     </Grid>
+
+    <Grid item md={6} xs={12}>
+      <EntityLinksCard />
+    </Grid>
+
+    <Grid item md={6} xs={12}>
+      <EntityArgoCDOverviewCard />
+    </Grid>
+
+    <Grid item md={6}>
+      <EntityGithubPullRequestsOverviewCard />
+    </Grid>
+
     <Grid item md={6} xs={12}>
       <EntityCatalogGraphCard variant="gridItem" height={400} />
     </Grid>
 
-    <Grid item md={4} xs={12}>
-      <EntityLinksCard />
-    </Grid>
-    <Grid item md={8} xs={12}>
-      <EntityArgoCDOverviewCard />
-    </Grid>
-
-    <Grid item md={8} xs={12}>
+    <Grid item md={6} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
     </Grid>
   </Grid>
@@ -174,6 +184,7 @@ const serviceEntityPage = (
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
+
   </EntityLayout>
 );
 
@@ -185,6 +196,10 @@ const websiteEntityPage = (
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/pull-requests" title="Pull Requests">
+      <EntityGithubPullRequestsContent />
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/dependencies" title="Dependencies">

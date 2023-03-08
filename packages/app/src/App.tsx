@@ -34,8 +34,30 @@ import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
+import { createTheme, darkTheme } from '@backstage/theme';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import DarkIcon from '@material-ui/icons/WbCloudy';
+
+const myTheme = createTheme({
+  palette: darkTheme.palette,
+  fontFamily: 'Raleway, Arial',
+  defaultPageTheme: 'home',
+});
+
 const app = createApp({
   apis,
+  themes: [{
+    id: 'my-theme',
+    title: 'My Custom Theme',
+    variant: 'dark',
+    icon: <DarkIcon />,
+    Provider: ({ children }) => (
+      <ThemeProvider theme={myTheme}>
+        <CssBaseline>{children}</CssBaseline>
+      </ThemeProvider>
+    ),
+  }],
   bindRoutes({ bind }) {
     bind(catalogPlugin.externalRoutes, {
       createComponent: scaffolderPlugin.routes.root,
